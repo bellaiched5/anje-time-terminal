@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "Anje Terminal",
+    "slug": "anje-time-terminal",
+    "version": "1.0.0",
+    "orientation": "landscape",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#667eea"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#667eea"
+      },
+      "package": "com.anjetime.terminal",
+      "permissions": [
+        "android.permission.NFC",
+        "android.permission.CAMERA"
+      ]
+    },
+    "plugins": [
+      [
+        "react-native-nfc-manager",
+        {
+          "nfcPermission": "Lecture NFC pour le pointage des employés",
+          "isoDep": true,
+          "selectIdentifiers": ["F0414E4A4554494D45"]
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Utilisée pour prendre la photo lors du pointage"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": ""
+      }
+    }
+  }
+}
