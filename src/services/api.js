@@ -1,6 +1,6 @@
 /**
  * Service API pour la tablette terminal AnjeTime
- * Communique avec le backend pour le pointage via badge/NFC/code
+ * Communique avec le backend pour le pointage via QR code / code clavier
  */
 
 const DEFAULT_API_URL = 'https://api.anjetime.com/api';
@@ -27,8 +27,8 @@ class TerminalAPI {
   }
 
   /**
-   * Scanner un badge (code, NFC UID, ou HCE ID)
-   * @param {string} qrData - Le code ou ID NFC scanné
+   * Scanner un badge (QR code ou code clavier)
+   * @param {string} qrData - Le QR code scanné ou le code tapé
    * @returns {Promise<Object>} Résultat du pointage
    */
   async scan(qrData) {
@@ -47,7 +47,6 @@ class TerminalAPI {
 
   /**
    * Valider la clé API du terminal
-   * On fait un scan test pour vérifier que la clé est valide
    */
   async validateKey(key) {
     try {
@@ -65,61 +64,6 @@ class TerminalAPI {
     } catch (error) {
       console.error('Erreur validation clé:', error);
       return false;
-    }
-  }
-
-  /**
-   * Récupérer la liste des employés pour l'affiliation NFC
-   */
-  async getEmployeesForAffiliation() {
-    try {
-      const response = await fetch(`${this.apiUrl}/badge/employees-for-affiliation`, {
-        headers: this.getHeaders(),
-      });
-      const data = await response.json();
-      return data.success ? data.employees : [];
-    } catch (error) {
-      console.error('Erreur chargement employés:', error);
-      return [];
-    }
-  }
-
-  /**
-   * Affilier un badge NFC à un employé
-   * @param {string} nfcId - L'ID NFC du badge/smartphone
-   * @param {number} employeeId - L'ID de l'employé
-   */
-  async affiliateNfc(nfcId, employeeId) {
-    try {
-      const response = await fetch(`${this.apiUrl}/badge/affiliate-nfc`, {
-        method: 'POST',
-        headers: this.getHeaders(),
-        body: JSON.stringify({ nfcId, employeeId }),
-      });
-      return await response.json();
-    } catch (error) {
-      console.error('Erreur affiliation:', error);
-      return { success: false, error: 'Erreur de connexion' };
-    }
-  }
-
-  /**
-   * Envoyer la photo du pointage
-   */
-  async savePhoto(pointageId, employeeId, photoBase64) {
-    try {
-      await fetch(`${this.apiUrl}/pointages/photo`, {
-        method: 'POST',
-        headers: this.getHeaders(),
-        body: JSON.stringify({
-          pointage_id: pointageId,
-          employee_id: employeeId,
-          photo_base64: photoBase64,
-          source: 'terminal_nfc',
-        }),
-      });
-    } catch (error) {
-      console.error('Erreur sauvegarde photo:', error);
     }
   }
 }

@@ -9,3 +9,9 @@ dist/
 *.orig.*
 web-build/
 .env
+
+# Keystore
+terminal-keystore.p12
+terminal-key.pem
+terminal-cert.pem
+credentials.json

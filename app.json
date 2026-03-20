@@ -1,8 +1,8 @@
-{
+﻿{
   "expo": {
     "name": "Anje Terminal",
     "slug": "anje-time-terminal",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "landscape",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -11,40 +11,28 @@
       "resizeMode": "contain",
       "backgroundColor": "#667eea"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#667eea"
       },
       "package": "com.anjetime.terminal",
-      "permissions": [
-        "android.permission.NFC",
-        "android.permission.CAMERA"
-      ]
+      "permissions": ["android.permission.CAMERA"]
     },
     "plugins": [
       [
-        "react-native-nfc-manager",
-        {
-          "nfcPermission": "Lecture NFC pour le pointage des employés",
-          "isoDep": true,
-          "selectIdentifiers": ["F0414E4A4554494D45"]
-        }
-      ],
-      [
         "expo-camera",
         {
-          "cameraPermission": "Utilisée pour prendre la photo lors du pointage"
+          "cameraPermission": "Utilisee pour scanner les QR codes de pointage des employes"
         }
       ]
     ],
     "extra": {
       "eas": {
-        "projectId": ""
+        "projectId": "97436926-024c-4dcb-8fb2-e80ef4620164"
       }
-    }
+    },
+    "owner": "anjetime"
   }
 }

@@ -1,14 +1,9 @@
 /**
  * Anje Time Terminal - App native Android pour tablette
  * 
- * Lecteur NFC pour pointage des employés.
+ * Scanner QR code pour pointage des employés.
  * Supporte :
- * - Badge NFC physique (carte MIFARE, NTAG, etc.)
- * - Smartphone Android (HCE - émulation de carte)
- * - iPhone Apple Wallet (pass NFC via ISO-DEP)
- * - Code clavier (code fixe / code auto)
- */
-
+ * - QR code badge (depuis PWA ou app mobile)
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, StatusBar } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
