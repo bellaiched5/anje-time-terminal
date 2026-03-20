@@ -1,9 +1,10 @@
 /**
  * Anje Time Terminal - App native Android pour tablette
  * 
- * Scanner QR code pour pointage des employés.
+ * Scanner QR code pour pointage des employÃ©s.
  * Supporte :
  * - QR code badge (depuis PWA ou app mobile)
+ */
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, StatusBar } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -18,7 +19,7 @@ export default function App() {
   const [isConfigured, setIsConfigured] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Au démarrage, vérifier si une clé API est sauvegardée
+  // Au dÃ©marrage, vÃ©rifier si une clÃ© API est sauvegardÃ©e
   useEffect(() => {
     const loadConfig = async () => {
       try {
@@ -32,12 +33,12 @@ export default function App() {
         if (savedKey) {
           terminalAPI.setTerminalKey(savedKey);
 
-          // Vérifier que la clé est toujours valide
+          // VÃ©rifier que la clÃ© est toujours valide
           const isValid = await terminalAPI.validateKey(savedKey);
           if (isValid) {
             setIsConfigured(true);
           } else {
-            // Clé expirée/supprimée, nettoyer
+            // ClÃ© expirÃ©e/supprimÃ©e, nettoyer
             await AsyncStorage.removeItem(STORAGE_KEY_API);
           }
         }
@@ -51,12 +52,12 @@ export default function App() {
     loadConfig();
   }, []);
 
-  // Callback quand le terminal est configuré
+  // Callback quand le terminal est configurÃ©
   const handleConfigured = (apiKey) => {
     setIsConfigured(true);
   };
 
-  // Réinitialiser le terminal
+  // RÃ©initialiser le terminal
   const handleReset = async () => {
     await AsyncStorage.removeItem(STORAGE_KEY_API);
     await AsyncStorage.removeItem(STORAGE_KEY_URL);

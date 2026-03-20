@@ -11,14 +11,18 @@
       "resizeMode": "contain",
       "backgroundColor": "#667eea"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#667eea"
       },
       "package": "com.anjetime.terminal",
-      "permissions": ["android.permission.CAMERA"]
+      "permissions": [
+        "android.permission.CAMERA"
+      ]
     },
     "plugins": [
       [
@@ -26,7 +30,8 @@
         {
           "cameraPermission": "Utilisee pour scanner les QR codes de pointage des employes"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "extra": {
       "eas": {
