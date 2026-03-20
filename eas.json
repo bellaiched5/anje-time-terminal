@@ -1,18 +1,21 @@
 {
   "cli": {
     "version": ">= 3.0.0",
-    "appVersionSource": "local"
+    "appVersionSource": "local",
+    "promptToConfigurePushNotifications": false
   },
   "build": {
     "preview": {
       "distribution": "internal",
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "credentialsSource": "local"
       }
     },
     "production": {
       "android": {
-        "buildType": "app-bundle"
+        "buildType": "app-bundle",
+        "credentialsSource": "local"
       }
     }
   }
