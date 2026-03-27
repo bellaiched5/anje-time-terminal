@@ -46,6 +46,33 @@ class TerminalAPI {
   }
 
   /**
+   * Envoyer la photo de vérification après un pointage par code
+   * @param {number} employeeId - L'ID de l'employé
+   * @param {number} pointageId - L'ID du pointage
+   * @param {string} photoBase64 - La photo en base64
+   */
+  async uploadPhoto(employeeId, pointageId, photoBase64) {
+    try {
+      const response = await fetch(`${this.apiUrl}/pointages/photo`, {
+        method: 'POST',
+        headers: this.getHeaders(),
+        body: JSON.stringify({
+          employee_id: employeeId,
+          pointage_id: pointageId,
+          photo_base64: `data:image/jpeg;base64,${photoBase64}`,
+          source: 'terminal_code',
+        }),
+      });
+      const data = await response.json();
+      console.log('📸 Photo uploadée:', data.success ? 'OK' : 'ERREUR');
+      return data;
+    } catch (error) {
+      console.log('📸 Upload photo échoué (non-bloquant):', error.message);
+      return { success: false };
+    }
+  }
+
+  /**
    * Valider la clé API du terminal
    */
   async validateKey(key) {

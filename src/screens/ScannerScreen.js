@@ -49,6 +49,9 @@ export default function ScannerScreen({ onReset }) {
   const scanResultTimer = useRef(null);
   const scanLockRef = useRef(false);
 
+  // Ref caméra pour capture photo
+  const cameraRef = useRef(null);
+
   // Horloge
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -146,6 +149,31 @@ export default function ScannerScreen({ onReset }) {
   }, [scanning]);
 
   /**
+   * Capturer une photo silencieusement et l'envoyer au backend
+   * Appelé uniquement après un badge par code fixe réussi
+   */
+  const captureAndUploadPhoto = useCallback(async (employeeId, pointageId) => {
+    try {
+      if (!cameraRef.current) {
+        console.log('📸 Pas de caméra disponible pour la photo');
+        return;
+      }
+      const photo = await cameraRef.current.takePictureAsync({
+        quality: 0.4,
+        base64: true,
+        skipProcessing: true,
+      });
+      if (photo?.base64) {
+        console.log('📸 Photo capturée, upload en cours...');
+        await terminalAPI.uploadPhoto(employeeId, pointageId, photo.base64);
+      }
+    } catch (err) {
+      // Non-bloquant : on ne veut pas perturber le pointage
+      console.log('📸 Capture photo échouée (non-bloquant):', err.message);
+    }
+  }, []);
+
+  /**
    * Soumission du code clavier
    */
   const handleCodeSubmit = useCallback(async () => {
@@ -170,6 +198,10 @@ export default function ScannerScreen({ onReset }) {
       const response = await terminalAPI.scan(code);
 
       if (response.success) {
+        // Capturer la photo en arrière-plan (non-bloquant)
+        if (response.pointageId && response.employeeId) {
+          captureAndUploadPhoto(response.employeeId, response.pointageId);
+        }
         showScanResult({
           success: true,
           employeeName: response.employeeName,
@@ -298,6 +330,7 @@ export default function ScannerScreen({ onReset }) {
           {qrReady && permission?.granted ? (
             <View style={styles.cameraContainer}>
               <CameraView
+                ref={cameraRef}
                 style={styles.camera}
                 facing="front"
                 barcodeScannerSettings={{
